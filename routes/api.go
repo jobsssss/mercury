@@ -13,6 +13,7 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		{
 			signupCtl := new(ctlv1.SignupController)
 			authGroup.POST("/signup/phone/exist", signupCtl.IsPhoneExist)
+			authGroup.POST("/signup/email/exist", signupCtl.IsEmailExist)
 		}
 	}
 }
