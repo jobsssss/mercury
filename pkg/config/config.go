@@ -25,6 +25,7 @@ func init() {
 	// The env file relative path of main.go
 	viper.AddConfigPath(".")
 
+	// Set env prefix in order to diff go system env
 	viper.SetEnvPrefix("appenv")
 
 	viper.AutomaticEnv()
