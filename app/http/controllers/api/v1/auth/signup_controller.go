@@ -4,6 +4,7 @@ import (
 	"fmt"
 	v1 "mercury/app/http/controllers/api/v1"
 	"mercury/app/models/user"
+	"mercury/app/requests"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,10 +15,8 @@ type SignupController struct {
 }
 
 func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
-	type PhoneExistRequest struct {
-		Phone string `json:"phone"`
-	}
-	request := PhoneExistRequest{}
+
+	request := requests.SignupPhoneExistRequest{}
 
 	if err := ctx.ShouldBindJSON(&request); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
@@ -26,6 +25,14 @@ func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
 
 		fmt.Println(err.Error())
 
+		return
+	}
+	errs := requests.ValidateSignupPhoneExist(&request, ctx)
+	if len(errs) > 0 {
+		// 验证失败，返回 422 状态码和错误信息
+		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"errors": errs,
+		})
 		return
 	}
 
