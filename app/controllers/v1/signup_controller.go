@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"mercury/app/models/user"
 	"mercury/app/requests"
 	"net/http"
@@ -16,22 +15,7 @@ type SignupController struct {
 func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
 
 	request := requests.SignupPhoneExistRequest{}
-
-	if err := ctx.ShouldBindJSON(&request); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
-		})
-
-		fmt.Println(err.Error())
-
-		return
-	}
-	errs := requests.ValidateSignupPhoneExist(&request, ctx)
-	if len(errs) > 0 {
-		// 验证失败，返回 422 状态码和错误信息
-		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"errors": errs,
-		})
+	if ok := requests.Validate(ctx, &request, requests.SignupPhoneExist); !ok {
 		return
 	}
 
@@ -40,36 +24,14 @@ func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
 	})
 }
 
-// IsEmailExist 检测邮箱是否已注册
+// IsEmailExist
 func (sc *SignupController) IsEmailExist(c *gin.Context) {
 
-	// 初始化请求对象
 	request := requests.SignupEmailExistRequest{}
-
-	// 解析 JSON 请求
-	if err := c.ShouldBindJSON(&request); err != nil {
-		// 解析失败，返回 422 状态码和错误信息
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
-		})
-		// 打印错误信息
-		fmt.Println(err.Error())
-		// 出错了，中断请求
+	if ok := requests.Validate(c, &request, requests.SignupEmailExist); !ok {
 		return
 	}
 
-	// 表单验证
-	errs := requests.ValidateSignupEmailExist(&request, c)
-	// errs 返回长度等于零即通过，大于 0 即有错误发生
-	if len(errs) > 0 {
-		// 验证失败，返回 422 状态码和错误信息
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"errors": errs,
-		})
-		return
-	}
-
-	//  检查数据库并返回响应
 	c.JSON(http.StatusOK, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
