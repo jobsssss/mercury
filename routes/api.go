@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"net/http"
+	"mercury/app/http/controllers/api/v1/auth"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,10 +9,10 @@ import (
 func RegisterAPIRoutes(router *gin.Engine) {
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/", func(ctx *gin.Context) {
-			ctx.JSON(http.StatusOK, gin.H{
-				"Hello": "Welcome to mercury!",
-			})
-		})
+		authGroup := v1.Group("/auth")
+		{
+			signupCtl := new(auth.SignupController)
+			authGroup.POST("/signup/phone/exist", signupCtl.IsPhoneExist)
+		}
 	}
 }

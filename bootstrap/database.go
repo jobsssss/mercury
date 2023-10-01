@@ -7,8 +7,9 @@ import (
 	"mercury/pkg/database"
 	"time"
 
-	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
+
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -31,8 +32,7 @@ func SetupDB() {
 			DSN: dsn,
 		})
 	case "sqlite":
-		database := config.Get("database.sqlite.database")
-		dbConfig = sqlite.Open(database)
+		dbConfig = sqlite.Open(config.Get("database.sqlite.database"))
 	default:
 		panic(errors.New("database connection not supported"))
 	}
@@ -40,6 +40,10 @@ func SetupDB() {
 	database.Connect(dbConfig, logger.Default.LogMode(logger.Info))
 	// Set max connection number
 	database.SQLDB.SetMaxOpenConns(config.GetInt("database.mysql.max_open_connections"))
+
+	database.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
 	// Set every connection duration (lifecycle)
 	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+	//database.DB.AutoMigrate(&user.User{})
 }
