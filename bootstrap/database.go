@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"mercury/pkg/config"
 	"mercury/pkg/database"
+	"mercury/pkg/logger"
 	"time"
 
 	"gorm.io/driver/sqlite"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 func SetupDB() {
@@ -37,7 +37,7 @@ func SetupDB() {
 		panic(errors.New("database connection not supported"))
 	}
 	// Connet database and set database log mode
-	database.Connect(dbConfig, logger.Default.LogMode(logger.Info))
+	database.Connect(dbConfig, logger.NewGormLogger())
 	// Set max connection number
 	database.SQLDB.SetMaxOpenConns(config.GetInt("database.mysql.max_open_connections"))
 
