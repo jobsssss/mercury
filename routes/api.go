@@ -12,6 +12,7 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		signupCtl := new(ctlV1.SignupController)
 		v1.POST("/auth/signup/phone/exist", signupCtl.IsPhoneExist)
 		v1.POST("/auth/signup/email/exist", signupCtl.IsEmailExist)
+		v1.POST("/auth/signup/using-phone", signupCtl.SignupUsingPhone)
 
 		// 发送验证码
 		vcc := new(ctlV1.VerifyCodeController)
