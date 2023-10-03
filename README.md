@@ -7,3 +7,5 @@
 - [zap](https://github.com/gin-contrib/zap) —— uber开源的高性能日志方案
 - [redis](https://github.com/go-redis/redis/v8) —— Redis 操作
 - [aliyun-communicate](https://github.com/KenmyZhang/aliyun-communicate) —— 阿里云短信
+- [MailHog](https://github.com/mailhog/MailHog) —— 邮件服务器
+- [email](https://github.com/jordan-wright/email) —— SMTP 邮件发送
