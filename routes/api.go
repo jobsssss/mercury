@@ -14,6 +14,11 @@ func RegisterAPIRoutes(router *gin.Engine) {
 			signupCtl := new(ctlv1.SignupController)
 			authGroup.POST("/signup/phone/exist", signupCtl.IsPhoneExist)
 			authGroup.POST("/signup/email/exist", signupCtl.IsEmailExist)
+
+			// 发送验证码
+			vcc := new(ctlv1.VerifyCodeController)
+			// 图片验证码，需要加限流
+			authGroup.POST("/verify-codes/captcha", vcc.ShowCaptcha)
 		}
 	}
 }

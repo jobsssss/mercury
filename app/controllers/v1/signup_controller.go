@@ -24,7 +24,6 @@ func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
 	})
 }
 
-// IsEmailExist
 func (sc *SignupController) IsEmailExist(c *gin.Context) {
 
 	request := requests.SignupEmailExistRequest{}

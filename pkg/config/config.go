@@ -82,6 +82,8 @@ func Get(path string, defaultVal ...interface{}) string {
 	return GetString(path, defaultVal...)
 }
 
+// @todo 该函数获取配置的值，如果配置不存在返回Nil
+// 如果配置中缺少了一个值，程序能正常启动，但是在运行过程中会报一个服务器错误而不给出具体原因，加大调试困难,后续要重构
 func selfGet(path string, defaultVal ...interface{}) interface{} {
 	if !viper.IsSet(path) || helpers.Empty(viper.Get(path)) {
 		if len(defaultVal) > 0 {
