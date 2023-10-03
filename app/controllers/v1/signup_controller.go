@@ -1,11 +1,10 @@
 package v1
 
 import (
+	"github.com/gin-gonic/gin"
 	"mercury/app/models/user"
 	"mercury/app/requests"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"mercury/pkg/response"
 )
 
 type SignupController struct {
@@ -19,7 +18,7 @@ func (sc *SignupController) IsPhoneExist(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
+	response.JSON(ctx, gin.H{
 		"exist": user.IsPhoneExist(request.Phone),
 	})
 }
@@ -31,7 +30,7 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
 }
