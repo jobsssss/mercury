@@ -13,12 +13,13 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		v1.POST("/auth/signup/phone/exist", signupCtl.IsPhoneExist)
 		v1.POST("/auth/signup/email/exist", signupCtl.IsEmailExist)
 		v1.POST("/auth/signup/using-phone", signupCtl.SignupUsingPhone)
+		v1.POST("/auth/signup/using-email", signupCtl.SignupUsingEmail)
 
 		// 发送验证码
-		vcc := new(ctlV1.VerifyCodeController)
+		vcCtl := new(ctlV1.VerifyCodeController)
 		// 图片验证码，需要加限流
-		v1.POST("/auth/verify-codes/captcha", vcc.ShowCaptcha)
-		v1.POST("/auth/verify-codes/phone", vcc.SendUsingPhone)
-		v1.POST("/auth/verify-codes/email", vcc.SendUsingEmail)
+		v1.POST("/auth/verify-codes/captcha", vcCtl.ShowCaptcha)
+		v1.POST("/auth/verify-codes/phone", vcCtl.SendUsingPhone)
+		v1.POST("/auth/verify-codes/email", vcCtl.SendUsingEmail)
 	}
 }
