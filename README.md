@@ -10,3 +10,4 @@
 - [MailHog](https://github.com/mailhog/MailHog) —— 邮件服务器,用来测试邮件发送的一个工具,安装完后MailHog启动
 - [email](https://github.com/jordan-wright/email) —— SMTP 邮件发送
 - [jwt](https://github.com/golang-jwt/jwt) —— JWT 操作
+- [limiter](https://github.com/ulule/limiter/v3) —— 限流器

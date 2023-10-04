@@ -2,33 +2,42 @@ package routes
 
 import (
 	ctlV1 "mercury/app/controllers/v1"
+	"mercury/app/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterAPIRoutes(router *gin.Engine) {
 	v1 := router.Group("/v1")
+	v1.Use(middlewares.LimitIP("200-H"))
 	{
 		signupCtl := new(ctlV1.SignupController)
-		v1.POST("/auth/signup/phone/exist", signupCtl.IsPhoneExist)
-		v1.POST("/auth/signup/email/exist", signupCtl.IsEmailExist)
-		v1.POST("/auth/signup/using-phone", signupCtl.SignupUsingPhone)
-		v1.POST("/auth/signup/using-email", signupCtl.SignupUsingEmail)
+		authGroup := v1.Group("/auth")
+		authGroup.Use(middlewares.LimitIP("1000-H"))
+		{
+			// 注册用户
+			authGroup.POST("/signup/phone/exist", middlewares.GuestJWT(), signupCtl.IsPhoneExist)
+			authGroup.POST("/signup/email/exist", middlewares.GuestJWT(), signupCtl.IsEmailExist)
+			authGroup.POST("/signup/using-phone", middlewares.GuestJWT(), signupCtl.SignupUsingPhone)
+			authGroup.POST("/signup/using-email", middlewares.GuestJWT(), signupCtl.SignupUsingEmail)
 
-		// 发送验证码
-		vcCtl := new(ctlV1.VerifyCodeController)
-		// 图片验证码，需要加限流
-		v1.POST("/auth/verify-codes/captcha", vcCtl.ShowCaptcha)
-		v1.POST("/auth/verify-codes/phone", vcCtl.SendUsingPhone)
-		v1.POST("/auth/verify-codes/email", vcCtl.SendUsingEmail)
+			// 发送验证码
+			vcCtl := new(ctlV1.VerifyCodeController)
+			// 图片验证码
+			authGroup.POST("/verify-codes/captcha", middlewares.LimitPerRoute("50-H"), vcCtl.ShowCaptcha)
+			authGroup.POST("/verify-codes/phone", middlewares.LimitPerRoute("20-H"), vcCtl.SendUsingPhone)
+			authGroup.POST("/verify-codes/email", middlewares.LimitPerRoute("20-H"), vcCtl.SendUsingEmail)
 
-		lgCtl := new(ctlV1.LoginController)
-		v1.POST("/auth/login/using-phone", lgCtl.LoginByPhone)
-		v1.POST("/auth/login/using-password", lgCtl.LoginByPassword)
-		v1.POST("/auth/login/refresh-token", lgCtl.RefreshToken)
+			//登录
+			lgCtl := new(ctlV1.LoginController)
+			authGroup.POST("/login/using-phone", middlewares.GuestJWT(), lgCtl.LoginByPhone)
+			authGroup.POST("/login/using-password", middlewares.GuestJWT(), lgCtl.LoginByPassword)
+			authGroup.POST("/login/refresh-token", middlewares.AuthJWT(), lgCtl.RefreshToken)
 
-		pwdCtl := new(ctlV1.PasswordController)
-		v1.POST("/auth/password-reset/using-phone", pwdCtl.ResetByPhone)
-		v1.POST("/auth/password-reset/using-email", pwdCtl.ResetByEmail)
+			// 重置密码
+			pwdCtl := new(ctlV1.PasswordController)
+			authGroup.POST("/auth/password-reset/using-phone", pwdCtl.ResetByPhone)
+			authGroup.POST("/auth/password-reset/using-email", pwdCtl.ResetByEmail)
+		}
 	}
 }
