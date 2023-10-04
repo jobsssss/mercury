@@ -21,5 +21,8 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		v1.POST("/auth/verify-codes/captcha", vcCtl.ShowCaptcha)
 		v1.POST("/auth/verify-codes/phone", vcCtl.SendUsingPhone)
 		v1.POST("/auth/verify-codes/email", vcCtl.SendUsingEmail)
+
+		lgCtl := new(ctlV1.LoginController)
+		v1.POST("/auth/login/using-phone", lgCtl.LoginByPhone)
 	}
 }
