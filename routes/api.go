@@ -29,5 +29,6 @@ func RegisterAPIRoutes(router *gin.Engine) {
 
 		pwdCtl := new(ctlV1.PasswordController)
 		v1.POST("/auth/password-reset/using-phone", pwdCtl.ResetByPhone)
+		v1.POST("/auth/password-reset/using-email", pwdCtl.ResetByEmail)
 	}
 }

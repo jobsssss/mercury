@@ -96,3 +96,13 @@ Content-Type: application/json
   "verify_code": "123456",
   "password": "111111"
 }
+
+### 通过邮箱找回密码
+POST {{host}}/v1/auth/password-reset/using-email
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "verify_code": "123456",
+  "password": "111111"
+}
