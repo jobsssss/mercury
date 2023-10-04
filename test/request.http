@@ -1,0 +1,88 @@
+### 检查手机号是否存在
+POST {{host}}/v1/auth/signup/phone/exist
+Content-Type: application/json
+
+{
+  "phone": "{{phone}}"
+}
+
+### 检查邮箱是否注册
+POST {{host}}/v1/auth/signup/email/exist
+Content-Type: application/json
+
+{
+    "email": "jobs@qq.com"
+}
+
+### 获取图形验证码
+POST {{host}}/v1/auth/verify-codes/captcha
+Content-Type: application/json
+
+### 发送短信验证码
+POST {{host}}/v1/auth/verify-codes/phone
+Content-Type: application/json
+
+{
+  "phone":"{{phone}}",
+  "captcha_id": "hqv3R9TD687RvJyXqho7",
+  "captcha_answer": "001295"
+}
+
+### 给邮箱发送验证码
+POST {{host}}/v1/auth/verify-codes/email
+Content-Type: application/json
+
+{
+  "email":"{{email}}",
+  "captcha_id": "captcha_skip_test",
+  "captcha_answer": "458430"
+}
+
+### 使用手机号注册账号
+POST {{host}}/v1/auth/signup/using-phone
+Content-Type: application/json
+
+{
+    "name":"mercury",
+    "password":"secret",
+    "password_confirm":"secret",
+    "verify_code": "123456",
+    "phone": "00011059149"
+}
+
+### 使用email注册账号
+POST {{host}}/v1/auth/signup/using-email
+Content-Type: application/json
+
+{
+  "name":"mercury_email",
+  "password":"secret",
+  "password_confirm":"secret",
+  "verify_code": "123123",
+  "email": "mercury_email@testing.com"
+}
+
+### 使用手机号登录
+POST {{host}}/v1/auth/login/using-phone
+Content-Type: application/json
+
+{
+  "phone":"{{phone}}",
+  "verify_code":"123456"
+}
+
+### 使用账号密码登录
+POST {{host}}/v1/auth/login/using-password
+Content-Type: application/json
+
+{
+    "login_id":"{{email}}",
+    "password":"secret",
+    "captcha_id": "captcha_skip_test",
+    "captcha_answer": "458430"
+}
+
+### 刷新jwt
+POST {{host}}/v1/auth/login/refresh-token
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
