@@ -24,5 +24,6 @@ func RegisterAPIRoutes(router *gin.Engine) {
 
 		lgCtl := new(ctlV1.LoginController)
 		v1.POST("/auth/login/using-phone", lgCtl.LoginByPhone)
+		v1.POST("/auth/login/using-password", lgCtl.LoginByPassword)
 	}
 }
