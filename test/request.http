@@ -86,3 +86,13 @@ Content-Type: application/json
 POST {{host}}/v1/auth/login/refresh-token
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 通过手机找回密码
+POST {{host}}/v1/auth/password-reset/using-phone
+Content-Type: application/json
+
+{
+  "phone": "{{phone}}",
+  "verify_code": "123456",
+  "password": "111111"
+}
