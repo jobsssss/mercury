@@ -11,3 +11,4 @@
 - [email](https://github.com/jordan-wright/email) —— SMTP 邮件发送
 - [jwt](https://github.com/golang-jwt/jwt) —— JWT 操作
 - [limiter](https://github.com/ulule/limiter/v3) —— 限流器
+- [ansi](https://github.com/mgutz/ansi) —— 终端高亮输出
