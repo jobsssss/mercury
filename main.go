@@ -2,12 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"mercury/bootstrap"
 	btsConfig "mercury/config"
 	"mercury/pkg/config"
-
-	"github.com/gin-gonic/gin"
 )
 
 func init() {
@@ -23,12 +20,5 @@ func main() {
 	bootstrap.SetupLogger()
 	bootstrap.SetupDB()
 	bootstrap.SetupRedis()
-
-	router := gin.New()
-	bootstrap.SetupRoute(router)
-
-	err := router.Run(":" + config.Get("app.port", "3000"))
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	bootstrap.Serve()
 }
