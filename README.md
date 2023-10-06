@@ -13,3 +13,5 @@
 - [limiter](https://github.com/ulule/limiter/v3) —— 限流器
 - [ansi](https://github.com/mgutz/ansi) —— 终端高亮输出
 - [cobra](https://github.com/spf13/cobra) —— 命令行结构
+- [strcase](https://github.com/iancoleman/strcase) —— 字符串大小写操作
+- [pluralize](https://github.com/gertd/go-pluralize) —— 英文字符单数复数处理
