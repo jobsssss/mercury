@@ -33,7 +33,7 @@ func init() {
 	ConfigFuncs = make(map[string]ConfigFunc)
 }
 
-// Initialize config information
+// InitConfig Initialize config information
 func InitConfig(env string) {
 
 	loadEnv(env)

@@ -1,13 +1,14 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"github.com/spf13/cobra"
+	"mercury/app/cmd"
 	"mercury/bootstrap"
 	btsConfig "mercury/config"
 	"mercury/pkg/config"
-
-	"github.com/gin-gonic/gin"
+	"mercury/pkg/console"
+	"os"
 )
 
 func init() {
@@ -15,20 +16,28 @@ func init() {
 }
 
 func main() {
-	var env string
-	flag.StringVar(&env, "env", "", "load .env, such as --env=testing, load are .env.testing")
-	flag.Parse()
-	config.InitConfig(env)
+	var rootCmd = &cobra.Command{
+		Use:   "mercury",
+		Short: "A web application skeleton",
+		Long:  `Default will run "serve" command, you can use "-h" flag to see all subcommand`,
 
-	bootstrap.SetupLogger()
-	bootstrap.SetupDB()
-	bootstrap.SetupRedis()
+		PersistentPreRun: func(command *cobra.Command, args []string) {
+			config.InitConfig(cmd.Env)
+			bootstrap.SetupLogger()
+			bootstrap.SetupDB()
+			bootstrap.SetupRedis()
+		},
+	}
 
-	router := gin.New()
-	bootstrap.SetupRoute(router)
+	// 注册子命令
+	rootCmd.AddCommand(cmd.CmdServe)
+	// 配置默认运行 Web 服务
+	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
+	// 注册全局参数，--env
+	cmd.RegisterGlobalFlags(rootCmd)
 
-	err := router.Run(":" + config.Get("app.port", "3000"))
-	if err != nil {
-		fmt.Println(err.Error())
+	// 执行主命令
+	if err := rootCmd.Execute(); err != nil {
+		console.Exit(fmt.Sprintf("Failed to run app with %v: %s", os.Args, err.Error()))
 	}
 }
