@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"mercury/app/cmd"
+	"mercury/app/cmd/make"
 	"mercury/bootstrap"
 	btsConfig "mercury/config"
 	"mercury/pkg/config"
@@ -34,6 +35,7 @@ func main() {
 		cmd.CmdServe,
 		cmd.CmdKey,
 		cmd.CmdPlay,
+		make.CmdMake,
 	)
 	// 配置默认运行 Web 服务
 	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
