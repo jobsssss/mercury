@@ -21,7 +21,7 @@ func init() {
 		models.BaseModel
 		Title      string `gorm:"type:varchar(255);not null;index"`
 		Body       string `gorm:"type:longtext;notnull"`
-		UserId     string `gorm:"type:bigint;not null;index"`
+		UserID     string `gorm:"type:bigint;not null;index"`
 		CategoryID string `gorm:"type:bigint;not null;index"`
 
 		// 会创建 user_id 和 category_id 外键的约束

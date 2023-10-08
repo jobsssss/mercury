@@ -2,6 +2,7 @@ package v1
 
 import (
 	"mercury/app/models/topic"
+	"mercury/app/policies"
 	"mercury/app/requests"
 	"mercury/pkg/auth"
 	"mercury/pkg/response"
@@ -24,7 +25,7 @@ func (ctrl *TopicsController) Store(ctx *gin.Context) {
 		Title:      request.Title,
 		Body:       request.Body,
 		CategoryID: request.CategoryID,
-		UserId:     auth.CurrentUID(ctx),
+		UserID:     auth.CurrentUID(ctx),
 	}
 	topicModel.Create()
 	if topicModel.ID > 0 {
@@ -39,6 +40,10 @@ func (ctrl *TopicsController) Update(ctx *gin.Context) {
 	topicModel := topic.Get(ctx.Param("id"))
 	if topicModel.ID == 0 {
 		response.Abort404(ctx)
+		return
+	}
+	if ok := policies.CanModifyTopic(ctx, topicModel); !ok {
+		response.Abort403(ctx)
 		return
 	}
 
