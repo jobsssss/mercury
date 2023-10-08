@@ -146,3 +146,14 @@ Authorization: Bearer {{access_token}}
 DELETE {{host}}/v1/categories/delete/11
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 创建话题
+POST {{host}}/v1/topics
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "title": "我发的帖子",
+  "body": "这里是帖子描述这里是帖子描述",
+  "category_id": "2"
+}
