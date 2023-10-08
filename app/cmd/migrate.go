@@ -7,6 +7,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func init() {
+	CmdMigrate.AddCommand(
+		CmdMigrateUp,
+		CmdMigrateRollback,
+	)
+}
+
 var CmdMigrate = &cobra.Command{
 	Use:   "migrate",
 	Short: "Run database migration",
@@ -19,12 +26,6 @@ var CmdMigrateUp = &cobra.Command{
 	Run:   runUp,
 }
 
-func init() {
-	CmdMigrate.AddCommand(
-		CmdMigrateUp,
-	)
-}
-
 func migrator() *migrate.Migrator {
 	// 注册 database/migrations 下的所有迁移文件
 	migrations.Initialize()
@@ -34,4 +35,16 @@ func migrator() *migrate.Migrator {
 
 func runUp(cmd *cobra.Command, args []string) {
 	migrator().Up()
+}
+
+var CmdMigrateRollback = &cobra.Command{
+	Use: "down",
+	// 设置别名 migrate down == migrate rollback
+	Aliases: []string{"rollback"},
+	Short:   "Reverse the up command",
+	Run:     runDown,
+}
+
+func runDown(cmd *cobra.Command, args []string) {
+	migrator().Rollback()
 }
