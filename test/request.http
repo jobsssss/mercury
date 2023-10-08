@@ -168,3 +168,8 @@ Authorization: Bearer {{access_token}}
   "body": "这里是帖子描述这里是帖子描述",
   "category_id": "3"
 }
+
+### 删除话题
+DELETE {{host}}/v1/topics/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
