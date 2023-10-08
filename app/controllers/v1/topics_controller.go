@@ -14,6 +14,19 @@ type TopicsController struct {
 	BaseAPIController
 }
 
+func (ctrl *TopicsController) Index(ctx *gin.Context) {
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(ctx, &request, requests.Pagination); !ok {
+		return
+	}
+
+	data, pager := topic.Paginate(ctx, 10)
+	response.JSON(ctx, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
+}
+
 func (ctrl *TopicsController) Store(ctx *gin.Context) {
 
 	request := requests.TopicRequest{}

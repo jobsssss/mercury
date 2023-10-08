@@ -173,3 +173,8 @@ Authorization: Bearer {{access_token}}
 DELETE {{host}}/v1/topics/2
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 话题列表
+GET {{host}}/v1/topics
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
