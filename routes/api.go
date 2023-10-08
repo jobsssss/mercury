@@ -11,11 +11,11 @@ func RegisterAPIRoutes(router *gin.Engine) {
 	v1 := router.Group("/v1")
 	v1.Use(middlewares.LimitIP("200-H"))
 	{
-		signupCtl := new(ctlV1.SignupController)
 		authGroup := v1.Group("/auth")
 		authGroup.Use(middlewares.LimitIP("1000-H"))
 		{
 			// 注册用户
+			signupCtl := new(ctlV1.SignupController)
 			authGroup.POST("/signup/phone/exist", middlewares.GuestJWT(), signupCtl.IsPhoneExist)
 			authGroup.POST("/signup/email/exist", middlewares.GuestJWT(), signupCtl.IsEmailExist)
 			authGroup.POST("/signup/using-phone", middlewares.GuestJWT(), signupCtl.SignupUsingPhone)
@@ -36,8 +36,8 @@ func RegisterAPIRoutes(router *gin.Engine) {
 
 			// 重置密码
 			pwdCtl := new(ctlV1.PasswordController)
-			authGroup.POST("/auth/password-reset/using-phone", pwdCtl.ResetByPhone)
-			authGroup.POST("/auth/password-reset/using-email", pwdCtl.ResetByEmail)
+			authGroup.POST("/password-reset/using-phone", pwdCtl.ResetByPhone)
+			authGroup.POST("/password-reset/using-email", pwdCtl.ResetByEmail)
 		}
 	}
 }

@@ -47,7 +47,7 @@ Content-Type: application/json
     "password":"secret",
     "password_confirm":"secret",
     "verify_code": "123456",
-    "phone": "00011059149"
+    "phone": "{{phone}}"
 }
 
 ### 使用email注册账号
@@ -55,11 +55,11 @@ POST {{host}}/v1/auth/signup/using-email
 Content-Type: application/json
 
 {
-  "name":"mercury_email",
+  "name":"mercuryemail",
   "password":"secret",
   "password_confirm":"secret",
   "verify_code": "123123",
-  "email": "mercury_email@testing.com"
+  "email": "{{email}}"
 }
 
 ### 使用手机号登录
