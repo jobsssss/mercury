@@ -52,8 +52,10 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		cgc := new(ctlV1.CategoriesController)
 		cgcGroup := v1.Group("/categories")
 		{
+			cgcGroup.GET("", cgc.Index)
 			cgcGroup.POST("/store", middlewares.AuthJWT(), cgc.Store)
 			cgcGroup.PUT("/update/:id", middlewares.AuthJWT(), cgc.Update)
 		}
+
 	}
 }

@@ -136,3 +136,8 @@ Authorization: Bearer {{access_token}}
   "name": "新分类名称",
   "description": "这里是描述"
 }
+
+### 获取所有分类
+GET {{host}}/v1/categories
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
