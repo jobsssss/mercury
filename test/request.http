@@ -141,3 +141,8 @@ Authorization: Bearer {{access_token}}
 GET {{host}}/v1/categories
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 删除分类
+DELETE {{host}}/v1/categories/delete/11
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
