@@ -111,3 +111,8 @@ Content-Type: application/json
 GET {{host}}/v1/user
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 获取所有用户信息
+
+GET {{host}}/v1/users
+Content-Type: application/json
