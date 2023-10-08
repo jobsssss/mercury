@@ -1,6 +1,11 @@
 package user
 
-import "mercury/pkg/database"
+import (
+	"github.com/gin-gonic/gin"
+	"mercury/pkg/app"
+	"mercury/pkg/database"
+	"mercury/pkg/paginator"
+)
 
 // IsEmailExist check Email has been register
 func IsEmailExist(email string) bool {
@@ -47,5 +52,17 @@ func GetByEmail(email string) (userModel User) {
 // All 获取所有用户数据
 func All() (users []User) {
 	database.DB.Find(&users)
+	return
+}
+
+// Paginate 分页内容
+func Paginate(ctx *gin.Context, perPage int) (users []User, paging paginator.Paging) {
+	paging = paginator.Paginate(
+		ctx,
+		database.DB.Model(User{}),
+		&users,
+		app.V1URL(database.TableName(&User{})),
+		perPage,
+	)
 	return
 }

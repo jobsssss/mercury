@@ -114,5 +114,5 @@ Authorization: Bearer {{access_token}}
 
 ### 获取所有用户信息
 
-GET {{host}}/v1/users
+GET {{host}}/v1/users?page=1&order=desc
 Content-Type: application/json
