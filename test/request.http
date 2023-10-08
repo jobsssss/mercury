@@ -126,3 +126,13 @@ Authorization: Bearer {{access_token}}
   "name": "新建分类",
   "description": "这里是描述"
 }
+
+### 更新分类
+PUT {{host}}/v1/categories/update/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "新分类名称",
+  "description": "这里是描述"
+}
