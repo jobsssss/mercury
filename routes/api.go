@@ -39,5 +39,9 @@ func RegisterAPIRoutes(router *gin.Engine) {
 			authGroup.POST("/password-reset/using-phone", pwdCtl.ResetByPhone)
 			authGroup.POST("/password-reset/using-email", pwdCtl.ResetByEmail)
 		}
+
+		uc := new(ctlV1.UsersController)
+		// 获取当前用户
+		v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
 	}
 }

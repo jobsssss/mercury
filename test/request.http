@@ -106,3 +106,8 @@ Content-Type: application/json
   "verify_code": "123456",
   "password": "111111"
 }
+
+### 获取当前登录用户信息
+GET {{host}}/v1/user
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
