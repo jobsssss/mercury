@@ -157,3 +157,14 @@ Authorization: Bearer {{access_token}}
   "body": "这里是帖子描述这里是帖子描述",
   "category_id": "2"
 }
+
+### 更新话题
+PUT {{host}}/v1/topics/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "title": "修改后的帖子标题",
+  "body": "这里是帖子描述这里是帖子描述",
+  "category_id": "3"
+}
