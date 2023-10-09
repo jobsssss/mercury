@@ -5,6 +5,7 @@ import (
 	"github.com/thedevsaddam/govalidator"
 	"mercury/app/requests/validators"
 	"mercury/pkg/auth"
+	"mime/multipart"
 )
 
 type UserUpdateProfileRequest struct {
@@ -13,10 +14,10 @@ type UserUpdateProfileRequest struct {
 	Introduction string `valid:"introduction" json:"introduction"`
 }
 
-func UserUpdateProfile(data interface{}, c *gin.Context) map[string][]string {
+func UserUpdateProfile(data interface{}, ctx *gin.Context) map[string][]string {
 
 	// 查询用户名重复时，过滤掉当前用户 ID
-	uid := auth.CurrentUID(c)
+	uid := auth.CurrentUID(ctx)
 	rules := govalidator.MapData{
 		"name":         []string{"required", "alpha_num", "between:3,20", "not_exists:users,name," + uid},
 		"introduction": []string{"min_cn:4", "max_cn:240"},
@@ -47,9 +48,9 @@ type UserUpdateEmailRequest struct {
 	VerifyCode string `json:"verify_code,omitempty" valid:"verify_code"`
 }
 
-func UserUpdateEmail(data interface{}, c *gin.Context) map[string][]string {
+func UserUpdateEmail(data interface{}, ctx *gin.Context) map[string][]string {
 
-	currentUser := auth.CurrentUser(c)
+	currentUser := auth.CurrentUser(ctx)
 	rules := govalidator.MapData{
 		"email": []string{
 			"required", "min:4",
@@ -87,9 +88,9 @@ type UserUpdatePhoneRequest struct {
 	VerifyCode string `json:"verify_code,omitempty" valid:"verify_code"`
 }
 
-func UserUpdatePhone(data interface{}, c *gin.Context) map[string][]string {
+func UserUpdatePhone(data interface{}, ctx *gin.Context) map[string][]string {
 
-	currentUser := auth.CurrentUser(c)
+	currentUser := auth.CurrentUser(ctx)
 
 	rules := govalidator.MapData{
 		"phone": []string{
@@ -126,7 +127,7 @@ type UserUpdatePasswordRequest struct {
 	NewPasswordConfirm string `valid:"new_password_confirm" json:"new_password_confirm,omitempty"`
 }
 
-func UserUpdatePassword(data interface{}, c *gin.Context) map[string][]string {
+func UserUpdatePassword(data interface{}, ctx *gin.Context) map[string][]string {
 	rules := govalidator.MapData{
 		"password":             []string{"required", "min:6"},
 		"new_password":         []string{"required", "min:6"},
@@ -153,4 +154,28 @@ func UserUpdatePassword(data interface{}, c *gin.Context) map[string][]string {
 	errs = validators.ValidatePasswordConfirm(_data.NewPassword, _data.NewPasswordConfirm, errs)
 
 	return errs
+}
+
+type UserUpdateAvatarRequest struct {
+	Avatar *multipart.FileHeader `valid:"avatar" form:"avatar"`
+}
+
+func UserUpdateAvatar(data interface{}, ctx *gin.Context) map[string][]string {
+
+	rules := govalidator.MapData{
+		// size 的单位为 bytes
+		// - 1024 bytes 为 1kb
+		// - 1048576 bytes 为 1mb
+		// - 20971520 bytes 为 20mb
+		"file:avatar": []string{"ext:png,jpg,jpeg", "size:20971520", "required"},
+	}
+	messages := govalidator.MapData{
+		"file:avatar": []string{
+			"ext:ext头像只能上传 png, jpg, jpeg 任意一种的图片",
+			"size:头像文件最大不能超过 20MB",
+			"required:必须上传图片",
+		},
+	}
+
+	return validateFile(ctx, data, rules, messages)
 }
