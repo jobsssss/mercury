@@ -16,3 +16,4 @@
 - [strcase](https://github.com/iancoleman/strcase) —— 字符串大小写操作
 - [pluralize](https://github.com/gertd/go-pluralize) —— 英文字符单数复数处理
 - [faker](https://github.com/bxcodec/faker) —— 假数据生成器
+- [imaging](https://github.com/disintegration/imaging) ——— 图片裁剪

@@ -3,6 +3,7 @@ package file
 
 import (
 	"fmt"
+	"github.com/disintegration/imaging"
 	"github.com/gin-gonic/gin"
 	"mercury/pkg/app"
 	"mercury/pkg/auth"
@@ -47,6 +48,24 @@ func SaveUploadAvatar(ctx *gin.Context, file *multipart.FileHeader) (string, err
 	// public/uploads/avatars/2021/12/22/1/nFDacgaWKpWWOmOt.png
 	avatarPath := publicPath + dirName + fileName
 	if err := ctx.SaveUploadedFile(file, avatarPath); err != nil {
+		return avatar, err
+	}
+
+	// 裁切图片
+	img, err := imaging.Open(avatarPath, imaging.AutoOrientation(true))
+	if err != nil {
+		return avatar, err
+	}
+	resizeAvatar := imaging.Thumbnail(img, 256, 256, imaging.Lanczos)
+	resizeAvatarName := randomNameFromUploadFile(file)
+	resizeAvatarPath := publicPath + dirName + resizeAvatarName
+	err = imaging.Save(resizeAvatar, resizeAvatarPath)
+	if err != nil {
+		return avatar, err
+	}
+	// 删除老文件
+	err = os.Remove(avatarPath)
+	if err != nil {
 		return avatar, err
 	}
 

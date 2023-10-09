@@ -165,9 +165,9 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Authorization: Bearer {{access_token}}
 
 --WebAppBoundary
-Content-Disposition: form-data; name="avatar"; filename="tx.jpg"
+Content-Disposition: form-data; name="avatar"; filename="3.jpeg"
 
-< /Users/zengrui/Documents/图片/tx.jpg
+< /Users/zengrui/Documents/comics/3.jpeg
 --WebAppBoundary--
 
 ### 新建分类
