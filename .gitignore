@@ -2,4 +2,4 @@
 .vscode
 .idea
 test/http-client.env.json
-public/uploads
+public/uploads/
