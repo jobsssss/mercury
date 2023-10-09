@@ -3,6 +3,7 @@ package factories
 
 import (
 	"mercury/app/models/user"
+	"mercury/pkg/hash"
 	"mercury/pkg/helpers"
 
 	"github.com/bxcodec/faker/v3"
@@ -11,7 +12,13 @@ import (
 func MakeUsers(times int) []user.User {
 
 	var objs []user.User
-
+	start := user.User{
+		Name:     "mercury",
+		Email:    "jobs@testing.com",
+		Phone:    "00012312312",
+		Password: hash.BcryptHash("secret"),
+	}
+	objs = append(objs, start)
 	// 设置唯一值
 	faker.SetGenerateUniqueValues(true)
 

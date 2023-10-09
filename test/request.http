@@ -11,7 +11,7 @@ POST {{host}}/v1/auth/signup/email/exist
 Content-Type: application/json
 
 {
-    "email": "jobs@qq.com"
+    "email": "{{email}}"
 }
 
 ### 获取图形验证码
