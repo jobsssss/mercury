@@ -27,6 +27,7 @@ func main() {
 			bootstrap.SetupLogger()
 			bootstrap.SetupDB()
 			bootstrap.SetupRedis()
+			bootstrap.SetupCache()
 		},
 	}
 
