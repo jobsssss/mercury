@@ -123,9 +123,19 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "name": "aufree",
+  "name": "mercury",
   "introduction": "这里是个人描述",
   "city": "上海"
+}
+
+### 更新用户邮箱
+PUT {{host}}/v1/users/email
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "email":"jobs@testing.com",
+  "verify_code": "123456"
 }
 
 ### 新建分类
