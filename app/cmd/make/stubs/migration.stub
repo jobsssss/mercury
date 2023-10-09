@@ -2,7 +2,6 @@ package migrations
 
 import (
     "database/sql"
-    "mercury/app/models"
     "mercury/pkg/migrate"
 
     "gorm.io/gorm"
