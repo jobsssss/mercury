@@ -97,3 +97,12 @@ func (ctrl *TopicsController) Delete(c *gin.Context) {
 
 	response.Abort500(c, "删除失败，请稍后尝试~")
 }
+
+func (ctrl *TopicsController) Show(ctx *gin.Context) {
+	topicModel := topic.Get(ctx.Param("id"))
+	if topicModel.ID == 0 {
+		response.Abort404(ctx)
+		return
+	}
+	response.Data(ctx, topicModel)
+}

@@ -178,3 +178,8 @@ Authorization: Bearer {{access_token}}
 GET {{host}}/v1/topics
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 显示单个话题
+GET {{host}}/v1/topics/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
