@@ -117,6 +117,17 @@ Authorization: Bearer {{access_token}}
 GET {{host}}/v1/users?page=1&order=desc
 Content-Type: application/json
 
+### 更新用户资料
+PUT {{host}}/v1/users/updateProfile
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "aufree",
+  "introduction": "这里是个人描述",
+  "city": "上海"
+}
+
 ### 新建分类
 POST {{host}}/v1/categories/store
 Content-Type: application/json

@@ -47,6 +47,7 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		usersGroup := v1.Group("/users")
 		{
 			usersGroup.GET("", uc.Index)
+			usersGroup.PUT("/updateProfile", middlewares.AuthJWT(), uc.UpdateProfile)
 		}
 
 		cgc := new(ctlV1.CategoriesController)
@@ -73,5 +74,6 @@ func RegisterAPIRoutes(router *gin.Engine) {
 		{
 			linksGroup.GET("", lsc.Index)
 		}
+
 	}
 }
