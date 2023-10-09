@@ -57,7 +57,9 @@ func loadEnv(suffix string) {
 			path = filepath
 		}
 	}
-
+	// 解决在tests目录下运行测试用例找不到配置文件.env的问题
+	pwd, _ := os.Getwd()
+	viper.AddConfigPath(pwd)
 	viper.SetConfigName(path)
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err.Error())
