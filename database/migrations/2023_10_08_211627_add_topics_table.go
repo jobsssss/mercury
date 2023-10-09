@@ -2,7 +2,7 @@ package migrations
 
 import (
 	"database/sql"
-	"mercury/app/models"
+	"mercury/app/models/topic"
 	"mercury/pkg/migrate"
 
 	"gorm.io/gorm"
@@ -10,32 +10,12 @@ import (
 
 func init() {
 
-	type User struct {
-		models.BaseModel
-	}
-	type Category struct {
-		models.BaseModel
-	}
-
-	type Topic struct {
-		models.BaseModel
-		Title      string `gorm:"type:varchar(255);not null;index"`
-		Body       string `gorm:"type:longtext;notnull"`
-		UserID     string `gorm:"type:bigint;not null;index"`
-		CategoryID string `gorm:"type:bigint;not null;index"`
-
-		// 会创建 user_id 和 category_id 外键的约束
-		User     User
-		Category Category
-		models.CommonTimestampsField
-	}
-
 	up := func(migrator gorm.Migrator, DB *sql.DB) {
-		migrator.AutoMigrate(&Topic{})
+		migrator.AutoMigrate(&topic.Topic{})
 	}
 
 	down := func(migrator gorm.Migrator, DB *sql.DB) {
-		migrator.DropTable(&Topic{})
+		migrator.DropTable(&topic.Topic{})
 	}
 
 	migrate.Add("2023_10_08_211627_add_topics_table", up, down)

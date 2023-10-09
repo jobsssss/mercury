@@ -10,12 +10,12 @@ import (
 
 type Topic struct {
 	models.BaseModel
-	Title      string            `json:"title,omitempty"`
-	Body       string            `json:"body,omitempty"`
-	UserID     string            `json:"user_id,omitempty"`
-	CategoryID string            `json:"category_id,omitempty"`
-	User       user.User         `json:"user"`
-	Category   category.Category `json:"category"`
+	Title      string `gorm:"type:varchar(255);not null;index"`
+	Body       string `gorm:"type:longtext;notnull"`
+	UserID     string `gorm:"type:bigint;not null;index"`
+	CategoryID string `gorm:"type:bigint;not null;index"`
+	User       user.User
+	Category   category.Category
 	models.CommonTimestampsField
 }
 

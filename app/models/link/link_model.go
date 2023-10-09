@@ -8,8 +8,8 @@ import (
 
 type Link struct {
 	models.BaseModel
-	Name string `json:"name,omitempty"`
-	URL  string `json:"link,omitempty"`
+	Name string `gorm:"type:varchar(255);not null"`
+	URL  string `gorm:"type:varchar(255);not null"`
 	models.CommonTimestampsField
 }
 
