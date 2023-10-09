@@ -16,7 +16,8 @@ var SQLDB *sql.DB
 func Connect(dbConfig gorm.Dialector, _logger gormlogger.Interface) {
 	var err error
 	DB, err = gorm.Open(dbConfig, &gorm.Config{
-		Logger: _logger,
+		Logger:                                   _logger,
+		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
 		fmt.Println(err.Error())
