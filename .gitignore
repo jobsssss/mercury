@@ -1,5 +1,5 @@
 .env
 .vscode
 .idea
-test/http-client.env.json
+docs/http-client.env.json
 public/uploads/
